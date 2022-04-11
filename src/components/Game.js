@@ -1,45 +1,23 @@
-import { useState } from 'react'
+import { getHints } from './utils'
 
-function TileRow({
-	active,
-	answer = '',
-	activeTileIndex,
-	rowIndex,
-	letters = [],
-}) {
-	let dynamicAnswer = answer.split('')
-
+function TileRow({ active, hints, activeTileIndex, rowIndex, letters }) {
 	return (
-		<div className={`tile-row ${active ? 'active' : 'inactive'}`}>
-			{letters.map((letter, i) => {
-				const isPresent = dynamicAnswer.includes(letter)
-				const isCorrectlyPlaced = dynamicAnswer[i] === letter
-
-				// setDynamicAnswer(dynamicAnswer.splice(i, 1, '-'))
-
-				return (
-					<Tile
-						key={`${rowIndex}-${i}`}
-						letter={letter}
-						active={active && activeTileIndex === i}
-						isCorrectlyPlaced={isCorrectlyPlaced}
-						isPresent={isPresent}
-					/>
-				)
-			})}
+		<div className={`tile-row ${active ? 'active' : ''}`}>
+			{letters.map((letter, i) => (
+				<Tile
+					key={`${rowIndex}-${i}`}
+					letter={letter}
+					active={active && activeTileIndex === i}
+					hint={hints[i]}
+				/>
+			))}
 		</div>
 	)
 }
 
-function Tile({ active, letter = '', isPresent, isCorrectlyPlaced }) {
+function Tile({ active, letter, hint = '' }) {
 	return (
-		<div
-			className={`tile${active ? ' active' : ''}${isPresent ? ' present' : ''}${
-				isCorrectlyPlaced ? ' correct' : ''
-			}`}
-		>
-			{letter}
-		</div>
+		<div className={`tile ${hint} ${active ? 'active' : ''}`}>{letter}</div>
 	)
 }
 
@@ -51,7 +29,11 @@ function Game({ activeIndex, answer, guesses }) {
 					<TileRow
 						active={activeIndex.row === i}
 						activeTileIndex={activeIndex.col}
-						answer={answer}
+						hints={
+							i < activeIndex.row
+								? getHints(guessRow, answer.split('')).hints
+								: []
+						}
 						key={i}
 						rowIndex={i}
 						letters={guessRow}

@@ -2,20 +2,13 @@ import Game from './Game.js'
 import Keyboard, { KEYBOARD_ROWS } from './Keyboard.js'
 import { useCallback, useEffect, useState } from 'react'
 import { WORD_LIST } from '../data/wordlist.js'
+import { getKeyboardHints, updateAtIndex } from './utils.js'
 
 const NUMBER_OF_GUESSES = 5
 const NUMBER_OF_TILES = 5
 
-const _changeMatrixAtIndex = (matrix, index, letter) => {
-	let newMatrix = matrix.map((row) => row.map((col) => col))
-
-	newMatrix[index.row][index.col] = letter
-
-	return newMatrix
-}
-
 function Dashboard() {
-	const [answer, setAnswer] = useState()
+	const [answer, setAnswer] = useState('')
 	const [solved, setSolved] = useState(false)
 
 	const [guesses, setGuesses] = useState(
@@ -45,7 +38,7 @@ function Dashboard() {
 		(letter) => {
 			if (!solved) {
 				if (letter === 'Backspace') {
-					setGuesses(_changeMatrixAtIndex(guesses, activeIndex, ''))
+					setGuesses(updateAtIndex(guesses, activeIndex, ''))
 
 					_decrementActiveIndexCol()
 				} else if (letter === 'Enter') {
@@ -66,7 +59,7 @@ function Dashboard() {
 						}
 					}
 				} else {
-					setGuesses(_changeMatrixAtIndex(guesses, activeIndex, letter))
+					setGuesses(updateAtIndex(guesses, activeIndex, letter))
 
 					_incrementActiveIndexCol()
 				}
@@ -119,7 +112,8 @@ function Dashboard() {
 
 			<Keyboard
 				onClick={_handleClick}
-				usedLetters={guesses.slice(0, activeIndex.row).flat()}
+				used={guesses.slice(0, activeIndex.row).flat()}
+				hints={getKeyboardHints(guesses.slice(0, activeIndex.row), answer)}
 			/>
 		</div>
 	)

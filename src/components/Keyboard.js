@@ -6,7 +6,7 @@ export const KEYBOARD_ROWS = [
 	['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'],
 ]
 
-function KeyboardButton({ letter, onClick, used }) {
+function KeyboardButton({ letter, onClick, used, hints }) {
 	const _getFlexNumber = (letter) => {
 		if (letter === 'Backspace' || letter === 'Enter') {
 			return 1.5
@@ -15,9 +15,25 @@ function KeyboardButton({ letter, onClick, used }) {
 		return 1
 	}
 
+	const _getAccurateHint = () => {
+		if (hints.correct.includes(letter)) {
+			return 'correct'
+		}
+
+		if (hints.present.includes(letter)) {
+			return 'present'
+		}
+
+		if (used.includes(letter)) {
+			return 'used'
+		}
+
+		return ''
+	}
+
 	return (
 		<button
-			className={`keyboard-button ${used ? 'used' : ''}`}
+			className={`keyboard-button ${_getAccurateHint()}`}
 			style={{ flex: _getFlexNumber(letter) }}
 			onClick={() => onClick(letter)}
 		>
@@ -30,7 +46,7 @@ function KeyboardButton({ letter, onClick, used }) {
 	)
 }
 
-function KeyboardRow({ keysInRow, addMargin, onClick, usedLetters }) {
+function KeyboardRow({ keysInRow, addMargin, onClick, used, hints }) {
 	return (
 		<div className={`keyboard-row ${addMargin ? 'extra-margin' : ''}`}>
 			{keysInRow.map((letter, index) => (
@@ -38,14 +54,15 @@ function KeyboardRow({ keysInRow, addMargin, onClick, usedLetters }) {
 					key={index}
 					letter={letter}
 					onClick={onClick}
-					used={usedLetters.includes(letter)}
+					used={used}
+					hints={hints}
 				/>
 			))}
 		</div>
 	)
 }
 
-function Keyboard({ onClick, usedLetters }) {
+function Keyboard({ used, onClick, hints }) {
 	return (
 		<div className="keyboard-section">
 			{KEYBOARD_ROWS.map((row, index) => (
@@ -54,7 +71,8 @@ function Keyboard({ onClick, usedLetters }) {
 					addMargin={index === 1}
 					keysInRow={row}
 					onClick={onClick}
-					usedLetters={usedLetters}
+					used={used}
+					hints={hints}
 				/>
 			))}
 		</div>

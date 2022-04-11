@@ -47,6 +47,14 @@
 			&.used {
 				background-color: $darkgrey;
 			}
+
+			&.present {
+				background-color: $darkyellow;
+			}
+
+			&.correct {
+				background-color: $darkgreen;
+			}
 		}
 	}
 }
