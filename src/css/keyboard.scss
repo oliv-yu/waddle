@@ -1,0 +1,52 @@
+.keyboard-section {
+	height: 200px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.keyboard-row {
+		width: 100%;
+		margin: 0 auto 8px;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+
+		&.extra-margin {
+			.keyboard-button:first-child {
+				margin-left: 1rem;
+			}
+			.keyboard-button:last-child {
+				margin-right: 1rem;
+			}
+		}
+
+		.keyboard-button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0;
+			margin: 0 6px 0 0;
+			height: 58px;
+			flex: 1;
+
+			border: 0;
+			border-radius: 4px;
+			background-color: $lightgrey;
+			font-weight: bold;
+			text-transform: uppercase;
+			color: $whitish;
+
+			cursor: pointer;
+			user-select: none;
+
+			&:last-of-type {
+				margin: 0;
+			}
+
+			&.used {
+				background-color: $darkgrey;
+			}
+		}
+	}
+}
