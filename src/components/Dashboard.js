@@ -120,7 +120,6 @@ function Dashboard() {
 
 			<Keyboard
 				onClick={_handleClick}
-				used={guesses.slice(0, activeIndex.row).flat()}
 				hints={getKeyboardHints(guesses.slice(0, activeIndex.row), answer)}
 			/>
 		</div>

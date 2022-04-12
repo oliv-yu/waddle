@@ -33,6 +33,7 @@ export const getHints = (guess, answer) => {
 export const getKeyboardHints = (guesses, answer) => {
 	let correct = []
 	let present = []
+	let used = []
 
 	guesses.forEach((guess) => {
 		const { correct: rowCorrect, present: rowPresent } = getHints(
@@ -42,10 +43,12 @@ export const getKeyboardHints = (guesses, answer) => {
 
 		correct = correct.concat(rowCorrect)
 		present = present.concat(rowPresent)
+		used = used.concat(guess)
 	})
 
 	return {
 		correct,
 		present,
+		used
 	}
 }

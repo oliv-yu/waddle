@@ -6,7 +6,7 @@ export const KEYBOARD_ROWS = [
 	['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],
 ]
 
-function KeyboardButton({ letter, onClick, used, hints }) {
+function KeyboardButton({ letter, onClick, hints }) {
 	const _getFlexNumber = (letter) => {
 		if (letter === 'backspace' || letter === 'enter') {
 			return 1.5
@@ -24,7 +24,7 @@ function KeyboardButton({ letter, onClick, used, hints }) {
 			return 'present'
 		}
 
-		if (used.includes(letter)) {
+		if (hints.used.includes(letter)) {
 			return 'used'
 		}
 
@@ -46,7 +46,7 @@ function KeyboardButton({ letter, onClick, used, hints }) {
 	)
 }
 
-function KeyboardRow({ keysInRow, addMargin, onClick, used, hints }) {
+function KeyboardRow({ keysInRow, addMargin, onClick, hints }) {
 	return (
 		<div className={`keyboard-row ${addMargin ? 'extra-margin' : ''}`}>
 			{keysInRow.map((letter, index) => (
@@ -54,7 +54,6 @@ function KeyboardRow({ keysInRow, addMargin, onClick, used, hints }) {
 					key={index}
 					letter={letter}
 					onClick={onClick}
-					used={used}
 					hints={hints}
 				/>
 			))}
@@ -62,7 +61,7 @@ function KeyboardRow({ keysInRow, addMargin, onClick, used, hints }) {
 	)
 }
 
-function Keyboard({ used, onClick, hints }) {
+function Keyboard({ onClick, hints }) {
 	return (
 		<div className="keyboard-section">
 			{KEYBOARD_ROWS.map((row, index) => (
@@ -71,7 +70,6 @@ function Keyboard({ used, onClick, hints }) {
 					addMargin={index === 1}
 					keysInRow={row}
 					onClick={onClick}
-					used={used}
 					hints={hints}
 				/>
 			))}
