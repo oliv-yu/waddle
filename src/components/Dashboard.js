@@ -113,15 +113,20 @@ function Dashboard() {
 	return (
 		<div className="dashboard">
 			<header>Waddle</header>
-			{solved && "You've solved it!"}
-			{!solved && activeIndex.row === NUMBER_OF_GUESSES && "Nice try! The answer was: " + answer.toLocaleUpperCase()}
 
-			<Game guesses={guesses} activeIndex={activeIndex} answer={answer} />
+			<div className="content">
+				{solved && "You've solved it!"}
+				{!solved &&
+					activeIndex.row === NUMBER_OF_GUESSES &&
+					'Nice try! The answer was: ' + answer.toLocaleUpperCase()}
 
-			<Keyboard
-				onClick={_handleClick}
-				hints={getKeyboardHints(guesses.slice(0, activeIndex.row), answer)}
-			/>
+				<Game guesses={guesses} activeIndex={activeIndex} answer={answer} />
+
+				<Keyboard
+					onClick={_handleClick}
+					hints={getKeyboardHints(guesses.slice(0, activeIndex.row), answer)}
+				/>
+			</div>
 		</div>
 	)
 }
