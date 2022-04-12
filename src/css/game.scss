@@ -17,12 +17,6 @@
 			grid-template-columns: repeat($numberOfTiles, 1fr);
 			grid-gap: 2%;
 
-			&.active {
-				.tile.active {
-					background-color: $lightergrey;
-				}
-			}
-
 			.tile {
 				display: inline-flex;
 				justify-content: center;
@@ -35,14 +29,6 @@
 				text-transform: uppercase;
 				width: 96%;
 				aspect-ratio: 1 / 1;
-
-				&.present {
-					background-color: $lightyellow;
-				}
-
-				&.correct {
-					background-color: $lightgreen;
-				}
 			}
 		}
 	}

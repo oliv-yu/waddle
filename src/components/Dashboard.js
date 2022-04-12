@@ -3,6 +3,7 @@ import Keyboard, { KEYBOARD_ROWS } from './Keyboard.js'
 import { useCallback, useEffect, useState } from 'react'
 import { WORD_LIST } from '../data/wordlist.js'
 import { getKeyboardHints, updateAtIndex } from './utils.js'
+import ThemeToggle from './context/ThemeToggle.js'
 
 const NUMBER_OF_GUESSES = 6
 const NUMBER_OF_TILES = 5
@@ -115,6 +116,8 @@ function Dashboard() {
 	return (
 		<div className="dashboard">
 			<header>Waddle</header>
+
+			<ThemeToggle />
 
 			<div className="content">
 				<span className="help-text">
