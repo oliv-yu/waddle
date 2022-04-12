@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/waddle/static/css/main.51e71a12.css",
-    "main.js": "/waddle/static/js/main.781d3828.js",
+    "main.css": "/waddle/static/css/main.a41f535e.css",
+    "main.js": "/waddle/static/js/main.d5b0bc8a.js",
     "static/js/787.fbbe35b3.chunk.js": "/waddle/static/js/787.fbbe35b3.chunk.js",
     "index.html": "/waddle/index.html",
     "static/media/backspace.svg": "/waddle/static/media/backspace.fa7eeaaadb53789a5fb834fffaa454fb.svg",
-    "main.51e71a12.css.map": "/waddle/static/css/main.51e71a12.css.map",
-    "main.781d3828.js.map": "/waddle/static/js/main.781d3828.js.map",
+    "main.a41f535e.css.map": "/waddle/static/css/main.a41f535e.css.map",
+    "main.d5b0bc8a.js.map": "/waddle/static/js/main.d5b0bc8a.js.map",
     "787.fbbe35b3.chunk.js.map": "/waddle/static/js/787.fbbe35b3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.51e71a12.css",
-    "static/js/main.781d3828.js"
+    "static/css/main.a41f535e.css",
+    "static/js/main.d5b0bc8a.js"
   ]
 }
