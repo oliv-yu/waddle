@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { WORD_LIST } from '../data/wordlist.js'
 import { getKeyboardHints, updateAtIndex } from './utils.js'
 
-const NUMBER_OF_GUESSES = 5
+const NUMBER_OF_GUESSES = 6
 const NUMBER_OF_TILES = 5
 
 function Dashboard() {
@@ -34,14 +34,24 @@ function Dashboard() {
 		})
 	}, [activeIndex])
 
+	const _incrementActiveIndexRow = useCallback(() => {
+		setActiveIndex({
+			row:
+				activeIndex.row < NUMBER_OF_GUESSES
+					? activeIndex.row + 1
+					: activeIndex.row,
+			col: 0,
+		})
+	}, [activeIndex])
+
 	const _handleClick = useCallback(
 		(letter) => {
 			if (!solved) {
-				if (letter === 'Backspace') {
+				if (letter === 'backspace') {
 					setGuesses(updateAtIndex(guesses, activeIndex, ''))
 
 					_decrementActiveIndexCol()
-				} else if (letter === 'Enter') {
+				} else if (letter === 'enter') {
 					const guess = guesses[activeIndex.row].join('')
 
 					if (guess.length === NUMBER_OF_TILES) {
@@ -49,13 +59,7 @@ function Dashboard() {
 							setSolved(true)
 						}
 						if (WORD_LIST.includes(guess)) {
-							setActiveIndex({
-								row:
-									activeIndex.row < NUMBER_OF_GUESSES
-										? activeIndex.row + 1
-										: activeIndex.row,
-								col: 0,
-							})
+							_incrementActiveIndexRow()
 						}
 					}
 				} else {
@@ -72,13 +76,16 @@ function Dashboard() {
 			solved,
 			_decrementActiveIndexCol,
 			_incrementActiveIndexCol,
+			_incrementActiveIndexRow,
 		]
 	)
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
-			if (KEYBOARD_ROWS.flat().includes(e.key)) {
-				_handleClick(e.key)
+			const lowerKey = e.key.toLocaleLowerCase()
+
+			if (KEYBOARD_ROWS.flat().includes(lowerKey)) {
+				_handleClick(lowerKey)
 			}
 
 			if (e.key === 'ArrowRight') {
@@ -107,7 +114,8 @@ function Dashboard() {
 		<div className="dashboard">
 			<header>Waddle</header>
 			{solved && "You've solved it!"}
-			{!solved && activeIndex.row === NUMBER_OF_GUESSES && "You've lost!"}
+			{!solved && activeIndex.row === NUMBER_OF_GUESSES && "Nice try! The answer was: " + answer.toLocaleUpperCase()}
+
 			<Game guesses={guesses} activeIndex={activeIndex} answer={answer} />
 
 			<Keyboard

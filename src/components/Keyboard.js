@@ -3,12 +3,12 @@ import backspaceIcon from '../icons/backspace.svg'
 export const KEYBOARD_ROWS = [
 	['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
 	['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-	['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'],
+	['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],
 ]
 
 function KeyboardButton({ letter, onClick, used, hints }) {
 	const _getFlexNumber = (letter) => {
-		if (letter === 'Backspace' || letter === 'Enter') {
+		if (letter === 'backspace' || letter === 'enter') {
 			return 1.5
 		}
 
@@ -37,7 +37,7 @@ function KeyboardButton({ letter, onClick, used, hints }) {
 			style={{ flex: _getFlexNumber(letter) }}
 			onClick={() => onClick(letter)}
 		>
-			{letter === 'Backspace' ? (
+			{letter === 'backspace' ? (
 				<img src={backspaceIcon} alt="backspace-icon" />
 			) : (
 				letter
