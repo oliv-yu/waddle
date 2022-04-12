@@ -120,7 +120,12 @@ function Dashboard() {
 					activeIndex.row === NUMBER_OF_GUESSES &&
 					'Nice try! The answer was: ' + answer.toLocaleUpperCase()}
 
-				<Game guesses={guesses} activeIndex={activeIndex} answer={answer} />
+				<Game
+					guesses={guesses}
+					activeIndex={activeIndex}
+					answer={answer}
+					onSelectTile={(row, col) => setActiveIndex({ row, col })}
+				/>
 
 				<Keyboard
 					onClick={_handleClick}

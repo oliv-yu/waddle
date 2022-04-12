@@ -1,27 +1,44 @@
 import { getHints } from './utils'
 
-function TileRow({ active, hints, activeTileIndex, rowIndex, letters }) {
+function TileRow({
+	active,
+	hints,
+	activeTileIndex,
+	rowIndex,
+	letters,
+	onSelectTile,
+}) {
 	return (
 		<div className={`tile-row ${active ? 'active' : ''}`}>
-			{letters.map((letter, i) => (
-				<Tile
-					key={`${rowIndex}-${i}`}
-					letter={letter}
-					active={active && activeTileIndex === i}
-					hint={hints[i]}
-				/>
-			))}
+			{letters.map((letter, i) =>
+				active ? (
+					<Tile
+						key={`${rowIndex}-${i}`}
+						letter={letter}
+						active={activeTileIndex === i}
+						hint={hints[i]}
+						onSelect={() => onSelectTile(i)}
+					/>
+				) : (
+					<Tile key={`${rowIndex}-${i}`} letter={letter} hint={hints[i]} />
+				)
+			)}
 		</div>
 	)
 }
 
-function Tile({ active, letter, hint = '' }) {
+function Tile({ active = false, letter, onSelect = () => {}, hint = '' }) {
 	return (
-		<div className={`tile ${hint} ${active ? 'active' : ''}`}>{letter}</div>
+		<div
+			onClick={onSelect}
+			className={`tile ${hint} ${active ? 'active' : ''}`}
+		>
+			{letter}
+		</div>
 	)
 }
 
-function Game({ activeIndex, answer, guesses }) {
+function Game({ activeIndex, answer, onSelectTile, guesses }) {
 	return (
 		<div className="game-section">
 			<div className="tile-container">
@@ -37,6 +54,7 @@ function Game({ activeIndex, answer, guesses }) {
 						key={i}
 						rowIndex={i}
 						letters={guessRow}
+						onSelectTile={(col) => onSelectTile(i, col)}
 					/>
 				))}
 			</div>
