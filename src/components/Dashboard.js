@@ -48,9 +48,11 @@ function Dashboard() {
 		(letter) => {
 			if (!solved) {
 				if (letter === 'backspace') {
-					setGuesses(updateAtIndex(guesses, activeIndex, ''))
-
-					_decrementActiveIndexCol()
+					if (guesses[activeIndex.row][activeIndex.col]) {
+						setGuesses(updateAtIndex(guesses, activeIndex, ''))
+					} else {
+						_decrementActiveIndexCol()
+					}
 				} else if (letter === 'enter') {
 					const guess = guesses[activeIndex.row].join('')
 
@@ -115,10 +117,12 @@ function Dashboard() {
 			<header>Waddle</header>
 
 			<div className="content">
-				{solved && "You've solved it!"}
-				{!solved &&
-					activeIndex.row === NUMBER_OF_GUESSES &&
-					'Nice try! The answer was: ' + answer.toLocaleUpperCase()}
+				<span className="help-text">
+					{solved && "You've solved it!"}
+					{!solved &&
+						activeIndex.row === NUMBER_OF_GUESSES &&
+						'Nice try! The answer was: ' + answer.toLocaleUpperCase()}
+				</span>
 
 				<Game
 					guesses={guesses}

@@ -24,7 +24,13 @@
 	}
 
 	.content {
-		width: 95%;
 		margin: 0 auto;
+		text-align: center;
+		width: 95%;
+
+		.help-text {
+			font-size: 1.2rem;
+			font-weight: 500;
+		}
 	}
 }
