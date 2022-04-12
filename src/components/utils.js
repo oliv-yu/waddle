@@ -23,6 +23,7 @@ export const getHints = (guess, answer) => {
 	guess.forEach((letter, i) => {
 		if (answer.includes(letter) && !hints[i]) {
 			hints[i] = 'present'
+			answer[answer.indexOf(letter)] = '-'
 			present.push(letter)
 		}
 	})
@@ -49,6 +50,6 @@ export const getKeyboardHints = (guesses, answer) => {
 	return {
 		correct,
 		present,
-		used
+		used,
 	}
 }
