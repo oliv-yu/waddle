@@ -8,14 +8,18 @@ import ThemeToggle from './context/ThemeToggle.js'
 const NUMBER_OF_GUESSES = 6
 const NUMBER_OF_TILES = 5
 
-function Dashboard() {
-	const [answer, setAnswer] = useState('')
-	const [solved, setSolved] = useState(false)
+const _getRandomWord = (list) => list[Math.floor(Math.random() * list.length)]
 
+function Dashboard() {
+	const [answer, setAnswer] = useState(_getRandomWord(WORD_LIST))
+	const [status, setStatus] = useState({
+		solved: false,
+		message: '',
+		finished: false,
+	})
 	const [guesses, setGuesses] = useState(
 		Array(NUMBER_OF_GUESSES).fill(Array(NUMBER_OF_TILES).fill(''))
 	)
-
 	const [activeIndex, setActiveIndex] = useState({ row: 0, col: 0 })
 
 	const _decrementActiveIndexCol = useCallback(() => {
@@ -47,7 +51,9 @@ function Dashboard() {
 
 	const _handleClick = useCallback(
 		(letter) => {
-			if (!solved) {
+			if (!status.finished) {
+				setStatus({ ...status, message: '' })
+
 				if (letter === 'backspace') {
 					if (guesses[activeIndex.row][activeIndex.col]) {
 						setGuesses(updateAtIndex(guesses, activeIndex, ''))
@@ -59,10 +65,29 @@ function Dashboard() {
 
 					if (guess.length === NUMBER_OF_TILES) {
 						if (guess === answer) {
-							setSolved(true)
-						}
-						if (WORD_LIST.includes(guess)) {
-							_incrementActiveIndexRow()
+							setStatus({
+								solved: true,
+								message: 'You solved it!',
+								finished: true,
+							})
+						} else {
+							if (WORD_LIST.includes(guess)) {
+								if (activeIndex.row === NUMBER_OF_GUESSES - 1) {
+									setStatus({
+										solved: false,
+										message: 'Nice try! The answer was: ' + answer,
+										finished: true,
+									})
+								} else {
+									_incrementActiveIndexRow()
+								}
+							} else {
+								setStatus({
+									solved: false,
+									message: 'Not a real word!',
+									finished: false,
+								})
+							}
 						}
 					}
 				} else {
@@ -76,12 +101,24 @@ function Dashboard() {
 			answer,
 			activeIndex,
 			guesses,
-			solved,
+			status,
+			setStatus,
 			_decrementActiveIndexCol,
 			_incrementActiveIndexCol,
 			_incrementActiveIndexRow,
 		]
 	)
+
+	const _handleReplay = useCallback(() => {
+		setAnswer(_getRandomWord(WORD_LIST))
+		setStatus({
+			solved: false,
+			message: '',
+			finished: false,
+		})
+		setGuesses(Array(NUMBER_OF_GUESSES).fill(Array(NUMBER_OF_TILES).fill('')))
+		setActiveIndex({ row: 0, col: 0 })
+	}, [])
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
@@ -107,12 +144,6 @@ function Dashboard() {
 		}
 	}, [_handleClick, _incrementActiveIndexCol, _decrementActiveIndexCol])
 
-	useEffect(() => {
-		const randomIndex = Math.floor(Math.random() * WORD_LIST.length)
-
-		setAnswer(WORD_LIST[randomIndex])
-	}, [])
-
 	return (
 		<div className="dashboard">
 			<header>Waddle</header>
@@ -120,12 +151,20 @@ function Dashboard() {
 			<ThemeToggle />
 
 			<div className="content">
-				<span className="help-text">
-					{solved && "You've solved it!"}
-					{!solved &&
-						activeIndex.row === NUMBER_OF_GUESSES &&
-						'Nice try! The answer was: ' + answer.toLocaleUpperCase()}
-				</span>
+				<div className="help-text">
+					{!!status.message && status.message.toLocaleUpperCase()}
+					{status.finished && (
+						<button
+							type="button"
+							className={`btn btn-sm btn-${
+								status.solved ? 'success' : 'danger'
+							} replay`}
+							onClick={_handleReplay}
+						>
+							REPLAY
+						</button>
+					)}
+				</div>
 
 				<Game
 					guesses={guesses}
