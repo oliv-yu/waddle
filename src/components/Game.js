@@ -169,6 +169,7 @@ function Game() {
 				<Guesses
 					guesses={guesses}
 					activeIndex={activeIndex}
+					finished={status.finished}
 					answer={answer}
 					onSelectTile={(row, col) => setActiveIndex({ row, col })}
 				/>

@@ -38,16 +38,16 @@ function Tile({ active = false, letter, onSelect = () => {}, hint = '' }) {
 	)
 }
 
-function Guesses({ activeIndex, answer, onSelectTile, guesses }) {
+function Guesses({ activeIndex, answer, finished, guesses, onSelectTile }) {
 	return (
 		<div className="guesses">
 			<div className="tile-container">
 				{guesses.map((guessRow, i) => (
 					<TileRow
-						active={activeIndex.row === i}
+						active={activeIndex.row === i && !finished}
 						activeTileIndex={activeIndex.col}
 						hints={
-							i < activeIndex.row
+							i < activeIndex.row || (i === activeIndex.row && finished)
 								? getHints(guessRow, answer.split('')).hints
 								: []
 						}
