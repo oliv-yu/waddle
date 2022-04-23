@@ -6,39 +6,65 @@ body {
 		background-color: $verywhite;
 		color: $verydark;
 
-		.tile-row {
-			&.active {
-				.tile.active {
-					background-color: $lightergrey;
-				}
-			}
-
-			.tile {
-				&.present {
-					background-color: $lightyellow;
+		.tile-container {
+			.tile-row {
+				&.active {
+					.tile.active {
+						background-color: $lightergrey;
+					}
 				}
 
-				&.correct {
-					background-color: $lightgreen;
+				.tile {
+					border-color: $lightgrey;
+
+					&.present {
+						background-color: $lightyellow;
+					}
+
+					&.correct {
+						background-color: $lightgreen;
+					}
 				}
 			}
 		}
 	}
 
-	.tile-row {
-		&.active {
-			.tile.active {
-				background-color: $darkgrey;
+	.tile-container {
+		.tile-row {
+			&.active {
+				.tile.active {
+					background-color: $darkgrey;
+				}
+			}
+
+			.tile {
+				&.present {
+					background-color: $darkyellow;
+				}
+
+				&.correct {
+					background-color: $darkgreen;
+				}
 			}
 		}
+	}
 
-		.tile {
-			&.present {
-				background-color: $darkyellow;
-			}
+	.keyboard-section {
+		.keyboard-row {
+			.keyboard-button {
+				background-color: $lightgrey;
 
-			&.correct {
-				background-color: $darkgreen;
+				&.used {
+					background-color: $darkgrey;
+				}
+
+				&.present {
+					background-color: $darkyellow;
+				}
+
+				&.correct {
+					background-color: $darkgreen;
+				}
 			}
 		}
 	}
