@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.scss'
 import './css/main.scss'
-import Dashboard from './components/Dashboard'
+import Game from './components/Game'
 import ThemeContextWrapper from './components/context/ThemeContextWrapper'
 import reportWebVitals from './reportWebVitals'
 
@@ -13,7 +13,7 @@ const root = createRoot(container)
 root.render(
 	<ThemeContextWrapper>
 		<React.StrictMode>
-			<Dashboard />
+			<Game />
 		</React.StrictMode>
 	</ThemeContextWrapper>
 )
